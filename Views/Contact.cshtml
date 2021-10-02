@@ -1,31 +1,9 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.Contact>
     @{
     Layout = "Master.cshtml";
-    var BackImage = "";
     }
 
-    @try
-    {
-        BackImage = @Model.MainImage.Url;
-    }
-    catch(NullReferenceException)
-    {
-        BackImage = "";
-    }
-
-    <!-- Page Header-->
-    <header class="masthead" style="background-image: url('@BackImage')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-11 col-lg-9 col-xl-8">
-                    <div class="site-heading">
-                        <h1>@(!string.IsNullOrWhiteSpace(Model.Title) ? Model.Title : Model.Name)</h1>
-                        <span class="subheading">@Model.Subtitle</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    @Html.Partial("~/Views/Partials/header.cshtml")
 
     <!-- Main Content-->
     <main class="mb-4">
