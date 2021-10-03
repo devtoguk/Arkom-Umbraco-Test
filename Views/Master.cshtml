@@ -1,9 +1,11 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 
 @using ClientDependency.Core.Mvc
+@using Umbraco.Forms.Web.Extensions;
+@using Umbraco.Forms.Mvc
 
 @{
-	Layout = null;
+    Layout = null;
     Html.RequiresCss("https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic");
     Html.RequiresCss("https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800");
     Html.RequiresCss("/css/styles.css");
@@ -24,11 +26,26 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     @Html.RenderCssHere()
 
+    @Html.RenderUmbracoFormDependencies()
+
 </head>
 <body>
     @Html.Partial("~/Views/Partials/navigation.cshtml")
     @RenderBody()
     @Html.Partial("~/Views/Partials/footer.cshtml")
     @Html.RenderJsHere()
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.0.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+
+    @if (TempData["UmbracoForms"] != null)
+    {
+        foreach (var form in (List<Guid>)TempData["UmbracoForms"])
+        {
+            Html.RenderAction("RenderFormScripts", "UmbracoForms", new { formid = form, theme = "default" });
+        }
+    }
+
 </body>
 </html>
